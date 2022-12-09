@@ -44,10 +44,7 @@ public class Player : MonoBehaviour
         float   x   = Input.GetAxis("Horizontal");
         float   y   = Input.GetAxis("Vertical");
         Vector2 dir = new Vector2(x, y);
-
-        
     }
-
 
     void Jump()
     {

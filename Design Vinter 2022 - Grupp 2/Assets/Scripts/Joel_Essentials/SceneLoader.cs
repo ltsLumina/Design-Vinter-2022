@@ -31,7 +31,7 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadNextScene(delay));
     }
 
-    // reload current scene
+    // reload scene
     public void ReloadScene()
     {
         int currentSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
@@ -61,4 +61,6 @@ public class SceneLoader : MonoBehaviour
             Debug.LogError("Next scene is unavailable");
         }
     }
+
+
 }
