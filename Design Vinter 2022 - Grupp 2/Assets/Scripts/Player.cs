@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
+    float gravityScaleAtStart = 1f;
+
+    float fallingThreshold    = -1f;
+    float fallingGravityScale = 2.5f;
 
     [Header("GroundCheck")]
     [SerializeField] Transform groundCheck;
@@ -22,6 +26,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        gravityScaleAtStart = myRigidbody.gravityScale;
     }
 
     void Update()
@@ -41,9 +46,11 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        float   x   = Input.GetAxis("Horizontal");
-        float   y   = Input.GetAxis("Vertical");
-        Vector2 dir = new Vector2(x, y);
+        float   xInput   = Input.GetAxis("Horizontal");
+        //float   yInput   = Input.GetAxis("Vertical"); // Might use this later.
+        //Vector2 dir = new Vector2(xInput, yInput);
+
+        myRigidbody.velocity = new Vector2(xInput * moveSpeed, myRigidbody.velocity.y);
     }
 
     void Jump()
@@ -51,6 +58,15 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             myRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            if (/*myRigidbody.velocity.y <= fallingThreshold*/ !isGrounded)
+            {
+                myRigidbody.gravityScale = fallingGravityScale;
+            }
+            else if (isGrounded)
+            {
+                myRigidbody.gravityScale = gravityScaleAtStart;
+            }
         }
     }
 
